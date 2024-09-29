@@ -1,0 +1,23 @@
+{
+	"name": "@services/nexus",
+	"version": "0.0.0",
+	"license": "UNLICENSED",
+	"author": "ManHat",
+	"type": "module",
+	"main": "dist/nexus.js",
+	"types": "dist/nexus.d.ts",
+	"private": true,
+	"scripts": {
+		"build": "rimraf dist/ && npx tsc",
+		"test": "npm run build && node dist/test.js"
+	},
+	"devDependencies": {
+		"@types/node": "^20.14.9",
+		"rimraf": "^5.0.7",
+		"typescript": "^5.5.3"
+	},
+	"dependencies": {
+		"@nexus/helpers": "github:ManHatos/NexusHelpers",
+		"helpers": "github:ManHatos/Helpers#v1.1.1"
+	}
+}
