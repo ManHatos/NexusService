@@ -1,4 +1,6 @@
+/** Transform API responses */
 export const transform = {
+    /** Transform a Nexus account */
     account(account) {
         return {
             discord: BigInt(account.discord),

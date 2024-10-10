@@ -1,10 +1,12 @@
 import { Requests } from "./client/requests.js";
 import { AppError } from "helpers";
 import { transform } from "./client/transform.js";
+/** The Nexus service allows you to interact with the Nexus APIs */
 export class Client extends Requests {
     constructor(config) {
         super(config);
     }
+    /** Initiate an authorization session */
     async init(type, sub) {
         return await this.request("GET", "/init", {
             key: true,
@@ -16,9 +18,11 @@ export class Client extends Requests {
             expiresAt: new Date(session.expiresAt),
         }));
     }
+    /** Process an authorization callback */
     async process(code, state) {
         await this.request("POST", "/process", { body: { code, state } }).then((response) => this.handle(response));
     }
+    /** Get a session's authorization URL */
     async session(code) {
         return await this.request("GET", "/session", { params: { code } }).then((response) => this.handle(response).data);
     }

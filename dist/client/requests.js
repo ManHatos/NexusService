@@ -1,15 +1,27 @@
 import { AppError, Logger } from "helpers";
 import { Errors } from "@nexus/helpers";
+/** Nexus service logger */
 export const logger = new Logger("Nexus");
+/** The Nexus service requests handler */
 export class Requests {
+    /** The Nexus API key */
     key;
+    /** Whether to throw `APIError`s instead of `AppError`s */
     rawErrors = false;
+    /** The Nexus API base URL */
     base = "nexus.tychosystems.xyz/api";
     constructor(config) {
         this.key = config?.key;
         this.rawErrors = config?.rawErrors ?? false;
     }
-    async request(method, path, options = {}) {
+    /** The heart of the API service, handles all requests to Nexus APIs */
+    async request(
+    /** The request's HTTP method */
+    method, 
+    /** The endpoint's path */
+    path, 
+    /** Additional HTTP and helper options */
+    options = {}) {
         const endpoint = "https://" + this.base + `/v${options.version ?? 1}` + path;
         logger.info("client calling: " + endpoint);
         const request = new Request(options.params ? endpoint.concat("?" + new URLSearchParams(options.params)) : endpoint, {
@@ -45,6 +57,7 @@ export class Requests {
         }
         return response;
     }
+    /** Handles Nexus API responses, throws on error */
     handle(response) {
         if (response.ok)
             return response;
